@@ -1,0 +1,39 @@
+@startuml User Login Flow
+
+start
+
+:Render Login Form;
+
+:User fills in username and password;
+
+:User clicks Login button;
+
+:Handle form submission (e.preventDefault());
+
+if (Form validation passes?) then (No)
+    :Show error alert "All fields are required";
+    stop
+else (Yes)
+    :Call userLogin API with credentials;
+    
+    if (API Response Status = 200?) then (Yes)
+        :Parse response to get token;
+        
+        if (Token exists?) then (Yes)
+            :Save token to localStorage;
+            :Set token in component state;
+            :Show success alert;
+            :Redirect to /dashboard/contact;
+            stop
+        else (No)
+            :Show error "No token received";
+            stop
+        endif
+    else (No)
+        :Parse error response;
+        :Show error alert with message;
+        stop
+    endif
+endif
+
+@enduml
