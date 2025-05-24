@@ -1,39 +1,58 @@
-@startuml UserProfile Flow
+@startuml User Profile Flow
 
 skinparam monochrome true
+skinparam backgroundColor #ffffff
 skinparam defaultFontName Arial
+skinparam defaultFontSize 12
+
+title User Profile Flow
 
 start
 
-:User membuka halaman Profile;
+:main.jsx;
 note right
-  URL: /dashboard/users/profile
-  Komponen UserProfile di-mount
+  - Inisialisasi React App
+  - Setup Router
+  - Render App Component
 end note
 
-if (Ada token di localStorage?) then (Ya)
-  :Ambil token dari localStorage;
-  :Panggil API userDetails dengan token;
-  
-  if (Respon sukses?) then (Ya)
-    :Update state name dengan data user;
-    :Tampilkan data profil;
-  else (Tidak)
-    :Tampilkan pesan error;
-    
-    if (Error 401?) then (Ya)
-      :Hapus token dari localStorage;
-      :Redirect ke halaman login;
-    else (Error lain)
-      :Tampilkan pesan error ke user;
-    endif
-  endif
-  
-else (Tidak)
-  :Tampilkan pesan "Anda belum login";
-  :Redirect ke halaman login;
-endif
+:App Component;
+if (User sudah login?) then (Ya)
+  :Redirect ke /dashboard;
+  :DashboardLayout.jsx;
+  note right
+    - Render Layout Dashboard
+    - Sertakan Sidebar
+    - Tampilkan konten sesuai route
+  end note
 
-stop
+  :UserProfile.jsx;
+  note right
+    - Komponen User Profile
+    - Menampilkan data user
+    - Form update profil
+  end note
+
+  :UserApi.js;
+  note right
+    - API calls untuk user
+    - userLogin()
+    - userDetail()
+    - dll
+  end note
+
+  :Ambil token dari localStorage;
+  if (Token valid?) then (Ya)
+    :Ambil data user;
+    :Tampilkan data user;
+  else (Tidak)
+    :Hapus token;
+    :Redirect ke /login;
+  endif
+
+else (Tidak)
+  :Redirect ke /login;
+  :Tampilkan halaman login;
+endif
 
 @enduml

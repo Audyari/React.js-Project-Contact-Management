@@ -12,36 +12,28 @@ export default function UserProfile() {
     const [isLoading, setIsLoading] = useState(true);
     const navigate = useNavigate();
    
-    async function fetchUserDetail() {
-        try {
-            setIsLoading(true);
-            const token = localStorage.getItem('token');
-            
-            if (!token) {
-                throw new Error('No token found');
-            }
-
-            const response = await userDetail(token);
-            const responseBody = await response.json();
-            console.log('Response:', responseBody);
-
-            if (response.status === 200) {
-                setName(responseBody.data?.name || '');
-            } else {
-                // Jika unauthorized, hapus token dan redirect ke login
-                if (response.status === 401) {
-                    localStorage.removeItem('token');
-                    navigate('/login');
-                }
-                throw new Error(responseBody.errors || 'Failed to fetch user data');
-            }
-        } catch (error) {
-            console.error('Error:', error);
-            await alerterror(error.message || 'Terjadi kesalahan saat memuat profil');
-        } finally {
-            setIsLoading(false);
-        }
-    }
+ async function fetchUserDetail() {
+     try {
+         setIsLoading(true);
+         const token = localStorage.getItem('token');
+         const response = await userDetail(token);
+         const responseBody = await response.json();
+         
+         console.log('Response:', responseBody);
+ 
+         if (response.status === 200) {
+             setName(responseBody.data?.name || '');
+         } else {
+             throw new Error(responseBody.errors || 'Gagal memuat data profil');
+         }
+     } catch (error) {
+         console.error('Error:', error);
+         alerterror(error.message);
+         // Biarkan ProtectedRoute yang menangani redirect
+     } finally {
+         setIsLoading(false);
+     }
+ }
 
     useEffectOnce(() => {
         fetchUserDetail();
