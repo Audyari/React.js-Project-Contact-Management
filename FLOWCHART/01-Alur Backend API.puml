@@ -1,0 +1,26 @@
+@startuml
+title Alur Backend API
+
+start
+
+:Client Request;
+
+if (Ada di Route?) then (ya)
+  :Validasi Request;
+  if (Valid?) then (ya)
+    :Proses di Controller;
+    :Panggil Service;
+    :Akses Database;
+    :Kirim Response ke Client;
+  else (tidak valid)
+    :Kembalikan Error Validasi;
+  endif
+else (tidak ada)
+  :Kembalikan 404 Not Found;
+endif
+
+:Log Request & Response;
+
+stop
+
+@enduml

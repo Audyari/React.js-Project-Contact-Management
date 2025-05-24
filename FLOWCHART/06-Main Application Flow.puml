@@ -1,0 +1,43 @@
+@startuml Main Application Flow
+
+title Node.js Application Entry Point
+
+start
+
+:Import web from "./application/web.js";
+:Import logger from "./application/logging.js";
+
+:Start HTTP Server on port 3000;
+
+if (Server starts successfully?) then (yes)
+  :Log "App start" message;
+  :Server ready to handle requests;
+else (no)
+  :Log error message;
+  :Exit process with error;
+endif
+
+stop
+
+note right
+  **File: main.js**
+  ====
+  This is the entry point of the application.
+  
+  **Dependencies:**
+  - web: Express application instance
+  - logger: Custom logging utility
+  
+  **Behavior:**
+  1. Imports required modules
+  2. Starts the HTTP server
+  3. Logs server startup
+  4. Handles any startup errors
+end note
+
+@enduml
+
+note right
+ cara jalanin aplikasi nya :
+ node src/main.js
+end note

@@ -1,0 +1,36 @@
+@startuml React Frontend Project Dependencies
+
+title React Frontend Project Setup
+
+start
+
+:Project Initialization;
+:Install Dependencies;
+
+fork
+  :**Main Dependencies**;
+  :react & react-dom (v19.1.0);
+  :react-router (v7.6.0);
+  :react-use (v17.6.0);
+  :sweetalert2 (v11.21.2);
+fork again
+  :**Dev Dependencies**;
+  :@vitejs/plugin-react;
+  :@types/react & @types/react-dom;
+  :eslint & plugins;
+  :vite (v6.3.5);
+fork end
+
+:Configure Scripts;
+
+note right
+  **Available Scripts:**
+  - dev: Start dev server
+  - build: Create production build
+  - preview: Preview production build
+  - lint: Run ESLint
+end note
+
+stop
+
+@enduml

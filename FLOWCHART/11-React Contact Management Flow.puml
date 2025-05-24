@@ -1,0 +1,53 @@
+@startuml
+title React Contact Management Flow
+
+' Styling
+skinparam backgroundColor #f8f9fa
+skinparam defaultFontName Arial
+skinparam roundcorner 10
+
+' Components
+rectangle Browser
+rectangle "index.html" as index
+rectangle "main.jsx" as main
+rectangle "Layout.jsx" as layout
+rectangle "UserRegister.jsx" as register
+
+' Routes
+database Router
+rectangle "/register" as route_register
+rectangle "/dashboard" as route_dashboard
+
+' Data Flow
+Browser --> index : 1. Loads HTML
+index --> main : 2. Loads React App
+main --> Router : 3. Initializes
+Router --> layout : 4. Wraps with Layout
+layout --> route_register : 5.1 Renders
+layout --> route_dashboard : 5.2 Renders
+route_register --> register : 6. Shows Form
+
+' Notes
+note right of main
+  **Dependencies:**
+  - React Router v6
+  - React Hooks
+  - Tailwind CSS
+end note
+
+note right of layout
+  **Layout Component:**
+  - Full screen gradient
+  - Centers content
+  - Consistent padding
+end note
+
+note right of register
+  **Form Features:**
+  - Form validation
+  - Responsive design
+  - Animated transitions
+  - Error handling
+end note
+
+@enduml

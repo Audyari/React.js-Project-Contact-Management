@@ -1,0 +1,35 @@
+@startuml Express.js Application Flow
+
+title Express.js Application Setup Flow
+
+start
+
+:Initialize Express Application;
+:Configure JSON Middleware;
+:Mount Public Routes;
+:Mount User Routes;
+:Register Error Middleware;
+:Enable CORS;
+
+stop
+
+note right
+  **web.js Components**
+  ====
+  
+  **Imports:**
+  - express
+  - publicRouter (from '../route/public-api.js')
+  - errorMiddleware (from '../middleware/error-middleware.js')
+  - userRouter (from '../route/api.js')
+  - cors (for enabling CORS)
+  
+  **Middleware Order:**
+  1. express.json()
+  2. publicRouter
+  3. userRouter
+  4. errorMiddleware
+  5. cors()
+end note
+
+@enduml

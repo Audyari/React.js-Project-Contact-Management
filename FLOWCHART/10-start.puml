@@ -1,0 +1,19 @@
+@startuml
+
+start
+
+:Initialize count state (0);
+:Show logos (Vite + React);
+:Display counter button;
+:Show edit instructions;
+
+if (User clicks button?) then (yes)
+  :Increment count;
+  :Update display;
+else (no)
+  :Wait for click;
+endif
+
+stop
+
+@enduml

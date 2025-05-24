@@ -1,0 +1,58 @@
+@startuml
+
+' Simple React Contact App Flow
+
+title React Contact Management - Simple Flow
+
+' Styling
+skinparam backgroundColor #ffffff
+skinparam defaultFontName Arial
+
+' Components
+[Browser] as browser
+[index.html] as index
+[App.jsx] as app
+[Router] as router
+
+' Pages
+[Login Page] as login
+[Register Page] as register
+[Contact List] as contacts
+[Add/Edit Contact] as edit
+[Contact Detail] as detail
+
+' Data Flow
+browser --> index : 1. Loads
+index --> app : 2. Renders
+app --> router : 3. Initializes
+
+' Routes
+router --> login : /login
+router --> register : /register
+router --> contacts : / (protected)
+router --> edit : /contacts/add
+router --> edit : /contacts/:id/edit
+router --> detail : /contacts/:id
+
+' Auth Flow
+login --> contacts : On Success
+register --> login : Redirect
+
+' Contact Operations
+contacts --> edit : Add New
+contacts --> detail : View
+contacts --> edit : Edit
+detail --> edit : Edit
+edit --> contacts : Save/Cancel
+
+detail --> contacts : Back
+
+' Styling
+note right of app
+  Uses:
+  - Tailwind CSS
+  - React Context
+  - React Router
+end note
+
+@enduml

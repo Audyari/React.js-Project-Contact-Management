@@ -1,0 +1,62 @@
+@startuml Prisma Database Flow
+
+title Simple Prisma Database Flow
+
+start
+
+:Client sends HTTP Request;
+
+if (Request Type?) then (GET /contacts)
+  :Query Contacts from Database;
+  :Return Contacts List;
+else if (POST /contacts)
+  :Validate Request Body;
+  :Create New Contact in Database;
+  :Return Created Contact;
+else if (GET /contacts/:id)
+  :Find Contact by ID;
+  :Return Contact Details;
+else if (PUT/PATCH /contacts/:id)
+  :Validate Request Body;
+  :Update Contact in Database;
+  :Return Updated Contact;
+else if (DELETE /contacts/:id)
+  :Delete Contact from Database;
+  :Return Success Message;
+else
+  :Return 404 Not Found;
+endif
+
+:Send Response to Client;
+
+stop
+
+' Database Schema
+note right
+  **Database Schema**
+  ====
+  **User**
+  - username (PK)
+  - password
+  - name
+  - token
+  
+  **Contact**
+  - id (PK)
+  - first_name
+  - last_name
+  - email
+  - phone
+  - username (FK)
+  
+  **Address**
+  - id (PK)
+  - street
+  - city
+  - province
+  - country
+  - postal_code
+  - contact_id (FK)
+end note
+
+@enduml

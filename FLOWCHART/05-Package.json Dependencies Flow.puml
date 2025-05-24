@@ -1,0 +1,40 @@
+@startuml Package.json Dependencies Flow
+
+title Node.js Project Dependencies Flow
+
+start
+
+:Project Initialization;
+:Install Dependencies;
+
+fork
+  :**Dependencies**;
+  :express (Web Framework);
+  :bcrypt (Hashing);
+  :cors (CORS);
+  :joi (Validation);
+  :uuid (ID Generation);
+  :winston (Logging);
+fork again
+  :**Dev Dependencies**;
+  :@babel/preset-env (ES6+ Support);
+  :@types/* (TypeScript Types);
+  :babel-jest (Testing);
+  :jest (Testing Framework);
+  :prisma (ORM);
+  :supertest (HTTP Testing);
+fork end
+
+:Configure Scripts;
+
+note right
+  **Main Scripts:**
+  - test: Run tests
+  - dev: Start development server
+  - prisma: Database migrations
+  - start: Production start
+end note
+
+stop
+
+@enduml

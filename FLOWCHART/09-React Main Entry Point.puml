@@ -1,0 +1,10 @@
+@startuml
+
+start
+
+:Load main.jsx;
+:Render App to #root;
+
+stop
+
+@enduml

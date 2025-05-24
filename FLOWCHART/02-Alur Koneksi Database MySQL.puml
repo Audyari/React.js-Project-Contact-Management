@@ -1,0 +1,38 @@
+@startuml
+title Alur Koneksi Database MySQL
+
+start
+
+:Load Environment Variables;
+note right
+  File: .env
+  DATABASE_URL="mysql://root:@localhost:3306/
+  belajar_nodejs_restful_api"
+end note
+
+:Parse Connection String;
+note right
+  - User: root
+  - Password: (empty)
+  - Host: localhost
+  - Port: 3306
+  - Database: belajar_nodejs_restful_api
+end note
+
+:Establish Database Connection;
+if (Koneksi Berhasil?) then (ya)
+  :Database Siap Digunakan;
+  :Lakukan Operasi Database;
+  :Tutup Koneksi;
+  stop
+else (gagal)
+  :Tampilkan Pesan Error;
+  note right: Cek:
+  - MySQL server aktif?
+  - Kredensial benar?
+  - Database ada?
+  - Port terbuka?
+  stop
+endif
+
+@enduml

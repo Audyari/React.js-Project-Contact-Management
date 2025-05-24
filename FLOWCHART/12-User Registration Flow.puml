@@ -1,0 +1,28 @@
+@startuml User Registration Flow
+start
+
+:Render User Registration Form;
+
+:User fills in registration details\n(Username, Name, Password, Confirm Password);
+
+:User clicks Register button;
+
+:Handle form submission (e.preventDefault());
+
+if (Password matches Confirm Password?) then (No)
+    :Show error alert "Password does not match";
+    stop
+else (Yes)
+    :Call userRegister API with user data;
+    
+    if (API Response Status = 200?) then (Yes)
+        :Show success alert "User registered successfully";
+        :Redirect to Login page;
+        stop
+    else (No)
+        :Show error alert with API error message;
+        stop
+    endif
+endif
+
+@enduml
