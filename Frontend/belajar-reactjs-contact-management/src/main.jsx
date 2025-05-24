@@ -4,8 +4,7 @@ import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import UserRegister from './components/User/UserRegister'
 import Layout from './components/layout'
 import UserLogin from './components/User/UserLogin'
-
-
+import DashboardLayout from './components/DashboardLayout'
 
 
 createRoot(document.getElementById('root')).render(
@@ -17,9 +16,8 @@ createRoot(document.getElementById('root')).render(
           <Route path="/login" element={<UserLogin />} />
         </Route>
 
-        <Route path="/dashboard" element={<div>Dashboard</div>} >
-        <Route path="/dashboard/contact" element={<div>Contact</div>} />
-        
+        <Route path="/dashboard" element={<DashboardLayout />}>
+        <Route path="/dashboard/contacts" element={<div>Contact</div>} />
         </Route>
         
       </Routes>   

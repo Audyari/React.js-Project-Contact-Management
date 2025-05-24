@@ -1,0 +1,67 @@
+@startuml Contact Management Flow
+
+skinparam componentStyle uml2
+skinparam backgroundColor #f8f9fa
+
+title Contact Management Application Flow
+
+component "main.jsx" as main {
+    [BrowserRouter] as router
+    [Routes] as routes
+    [Route] as rootRoute
+    [Route] as dashboardRoute
+    [StrictMode] as strict
+}
+
+component "DashboardLayout.jsx" as dashboard {
+    [Header] as header
+    [Navigation] as nav
+    [Main Content] as content
+    [Footer] as footer
+    [Logout Handler] as logout
+}
+
+component "Layout.jsx" as layout {
+    [Auth Layout] as authLayout
+}
+
+component "Pages" as pages {
+    [UserRegister] as register
+    [UserLogin] as login
+    [Dashboard] as dashboardPage
+    [Contacts] as contacts
+    [UserProfile] as profile
+}
+
+' Main Flow
+strictr --> router
+router --> routes
+routes --> rootRoute
+routes --> dashboardRoute
+
+' Layout Flow
+rootRoute --> layout
+layout --> register : /register
+layout --> login : /login
+
+' Dashboard Flow
+dashboardRoute --> dashboard : /dashboard
+dashboard --> contacts : /dashboard/contacts
+dashboard --> profile : /dashboard/users/profile
+
+' Dashboard Components
+dashboard --> header : Renders with logo and title
+dashboard --> nav : Renders navigation
+dashboard --> content : Renders <Outlet />
+dashboard --> footer : Renders copyright
+dashboard --> logout : Handles logout
+
+' Logout Flow
+logout --> login : On click, redirects to /Dashboard/users/logout
+
+' Navigation Links
+header --> contacts : Logo click
+nav --> profile : Profile link
+nav --> logout : Logout button
+
+@enduml

@@ -16,7 +16,7 @@ export default function UserLogin() {
 
     useEffect(() => {
         if (token) {
-            navigate('/dashboard/contact');
+            navigate('/dashboard/contacts');
         }
     }, [token]);
 
@@ -39,7 +39,7 @@ export default function UserLogin() {
                    localStorage.setItem('token', token);
                    //localStorage.setItem('username', username);
                    setToken(token);
-                   navigate('/dashboard/contact');
+                   navigate('/dashboard/contacts');
                } else {
                    throw new Error('No token received from server');
                }
