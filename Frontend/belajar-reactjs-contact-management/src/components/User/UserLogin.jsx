@@ -1,62 +1,55 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { alerterror } from '../../lib/alert';
 import { userLogin } from '../../lib/api/UserApi';
-import { useNavigate } from 'react-router-dom';
-import { useEffect } from 'react';
-
-
 
 export default function UserLogin() {
 
-    const navigate = useNavigate()
-    const [username, setUsername] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [token, setToken] = React.useState(localStorage.getItem('token'));
+    const navigate = useNavigate();
+    const [username, setUsername] = useState('');
+    const [password, setPassword] = useState('');
+    const [token, setToken] = useState(localStorage.getItem('token'));
 
     useEffect(() => {
         if (token) {
-            navigate('/dashboard/contacts');
+            navigate('/dashboard/users/profile');
         }
-    }, [token]);
+    }, [token, navigate]);
 
-   const handleSubmit = async (e) => {
-       e.preventDefault();
-       try {
-           const response = await userLogin(username, password);
-           const data = await response.json();  // Pindahkan parsing JSON ke sini
-           
-           console.log('Login response:', { 
-               status: response.status,
-               ok: response.ok,
-               data 
-           });
-   
-           if (response.ok) {
-               // Simpan token dari respons API
-               const token = data.data?.token;
-               if (token) {
-                   localStorage.setItem('token', token);
-                   //localStorage.setItem('username', username);
-                   setToken(token);
-                   navigate('/dashboard/contacts');
-               } else {
-                   throw new Error('No token received from server');
-               }
-           } else {
-               throw new Error(data.message || 'Login failed');
-           }
-       } catch (error) {
-           console.error('Login error:', error);
-           alerterror({
-               title: 'Login Failed',
-               message: error.message || 'Invalid username or password'
-           });
-       }
-   };
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+        try {
+            const response = await userLogin(username, password);
+            const data = await response.json();  // Pindahkan parsing JSON ke sini
+            console.log('Login response:', { 
+                status: response.status,
+                ok: response.ok,
+                data 
+            });
+            if (response.ok) {
+                // Simpan token dari respons API
+                const token = data.data?.token;
+                if (token) {
+                    localStorage.setItem('token', token);
+                    //localStorage.setItem('username', username);
+                    setToken(token);
+                    navigate('/dashboard/users/profile');
+                } else {
+                    throw new Error('No token received from server');
+                }
+            } else {
+                throw new Error(data.message || 'Login failed');
+            }
+        } catch (error) {
+            console.error('Login error:', error);
+            alerterror({
+                title: 'Login Failed',
+                message: error.message || 'Invalid username or password'
+            });
+        }
+    };
 
-    return <>
-    
+    return (
         <div className="animate-fade-in bg-gray-800 bg-opacity-80 p-8 rounded-xl shadow-custom border border-gray-700 backdrop-blur-sm w-full max-w-md">
             <div className="text-center mb-8">
                 <div className="inline-block p-3 bg-gradient rounded-full mb-4">
@@ -104,7 +97,5 @@ export default function UserLogin() {
                 </div>
             </form>
         </div>
-
-    </>
-    
+    )
 }

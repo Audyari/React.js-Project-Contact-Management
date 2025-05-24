@@ -1,15 +1,16 @@
 import { Outlet } from "react-router-dom";
-import { Link, useNavigate } from "react-router-dom";
+import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 export default function DashboardLayout() {
     const navigate = useNavigate();
 
     const handleLogout = () => {
         localStorage.removeItem('token');
-        navigate('/Dashboard/users/logout');
+        navigate('/login');
     };
     return (
-        <body className="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen flex flex-col">
+        <div className="bg-gradient-to-br from-gray-900 to-gray-800 min-h-screen flex flex-col">
             <header className="bg-gradient shadow-lg">
                 <div className="container mx-auto px-4 py-4 flex justify-between items-center">
                     <Link to="/dashboard/contacts" className="flex items-center hover:opacity-90 transition-opacity duration-200">
@@ -42,6 +43,6 @@ export default function DashboardLayout() {
             <div className="mt-10 mb-6 text-center text-gray-400 text-sm">
                 <p>&copy; 2025 Contact Management. All rights reserved.</p>
             </div>
-        </body>
+        </div>
     );
 }

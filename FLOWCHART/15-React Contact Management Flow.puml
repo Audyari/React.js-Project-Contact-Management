@@ -1,0 +1,56 @@
+@startuml React Contact Management Flow
+
+skinparam monochrome true
+skinparam defaultFontName Arial
+
+actor User
+rectangle "Aplikasi React" {
+  [main.jsx] as main
+  [DashboardLayout.jsx] as layout
+  [UserProfile.jsx] as profile
+  [UserAPI.js] as api
+}
+
+' Alur Utama
+User -> main: 1. Mengakses Aplikasi
+main -> layout: 2. Render DashboardLayout
+layout -> profile: 3. Render UserProfile
+profile -> api: 4. GET /users/current
+api --> profile: 5. Return Data
+profile -> User: 6. Tampilkan Profil
+
+' Alur Update
+User -> profile: 7. Submit Update
+profile -> api: 8. PATCH /users/current
+api --> profile: 9. Return Status
+profile -> User: 10. Tampilkan Notifikasi
+
+' Alur Logout
+User -> layout: 11. Klik Logout
+layout -> main: 12. Hapus Token
+
+' Komponen
+note right of main
+  - Route Configuration
+  - Auth Check
+end note
+
+note right of layout
+  - Navigation
+  - Logout Handler
+  - Content Area
+end note
+
+note right of profile
+  - Form Edit
+  - Tampil Data
+  - Handle Update
+end note
+
+note right of api
+  - userDetails()
+  - updateProfile()
+  - updatePassword()
+end note
+
+@enduml

@@ -1,0 +1,39 @@
+@startuml UserProfile Flow
+
+skinparam monochrome true
+skinparam defaultFontName Arial
+
+start
+
+:User membuka halaman Profile;
+note right
+  URL: /dashboard/users/profile
+  Komponen UserProfile di-mount
+end note
+
+if (Ada token di localStorage?) then (Ya)
+  :Ambil token dari localStorage;
+  :Panggil API userDetails dengan token;
+  
+  if (Respon sukses?) then (Ya)
+    :Update state name dengan data user;
+    :Tampilkan data profil;
+  else (Tidak)
+    :Tampilkan pesan error;
+    
+    if (Error 401?) then (Ya)
+      :Hapus token dari localStorage;
+      :Redirect ke halaman login;
+    else (Error lain)
+      :Tampilkan pesan error ke user;
+    endif
+  endif
+  
+else (Tidak)
+  :Tampilkan pesan "Anda belum login";
+  :Redirect ke halaman login;
+endif
+
+stop
+
+@enduml

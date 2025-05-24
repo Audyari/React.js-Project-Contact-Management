@@ -16,3 +16,7 @@ Content-Type: application/json
   "username": "audy",
   "password": "audy"
 }
+
+### Get User Details
+GET http://localhost:3000/api/users/current
+Authorization: 59d4b182-8e47-4b6d-b6bb-5dd966bbdf9a
